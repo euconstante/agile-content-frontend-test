@@ -1,0 +1,11 @@
+# Diretório de módulos do Node.js
+/node_modules
+
+# Diretório com os arquivos para distribuição
+/dist
+
+# Arquivos gerados pelos testes de unitários e de cobertura.
+/coverage
+
+# Arquivos e configurações dos generators
+/generators
