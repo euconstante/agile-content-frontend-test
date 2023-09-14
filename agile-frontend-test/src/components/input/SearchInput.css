@@ -1,0 +1,30 @@
+.search__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px 20px 0px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  margin-left: 20px;
+  padding: 5px 10px;
+  width: 50%;
+}
+
+.search input {
+  border: none;
+  outline-width: 0;
+}
+
+.search__button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  font-size: 16px;
+}

@@ -24,8 +24,14 @@
     "paths": {
       "@/*": ["*"]
     },
-    "jsxFactory": "React.createElement"
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment"
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts"],
+  "include": [
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "src/components",
+    "src/custom.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
