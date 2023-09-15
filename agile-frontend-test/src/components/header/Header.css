@@ -1,0 +1,41 @@
+/* Header.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__right {
+  display: flex;
+  gap: 10px;
+}
+
+.chrome-header__profile img.chrome-header__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chrome-header__menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.chrome-header__menu img {
+  width: 24px;
+  height: 24px;
+}
+.header__img {
+  width: 10%;
+}
+/* Add more styles as needed */

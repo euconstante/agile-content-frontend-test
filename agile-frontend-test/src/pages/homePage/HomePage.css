@@ -1,0 +1,10 @@
+.home {
+  text-align: center;
+  height: 65vh;
+}
+.home__content {
+  margin-top: 20vh;
+}
+.home__image {
+  width: 20%;
+}

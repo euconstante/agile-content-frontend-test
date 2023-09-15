@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Configurações dos arquivos de saída.
+    "charset": "utf-8",
+    "importHelpers": true,
+    "module": "es2020",
+    "newLine": "lf",
+    "sourceMap": true,
+    "target": "es5",
+    "baseUrl": "src",
+    "paths": {
+      "test-utils": ["./utils/test-utils"]
+    },
+    // Configurações de declaração de tipos.
+    "declaration": true,
+    "declarationDir": "./types",
+    "declarationMap": true
+  },
+  "exclude": [
+    "./src/setupTests.ts",
+    "./src/**/*.test.ts",
+    "./src/**/*.test.tsx",
+    "./src/tests/**/*.ts"
+  ]
+}
