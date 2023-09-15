@@ -5,6 +5,35 @@
   margin: 20px 0px 20px 0px;
 }
 
+.search__header {
+  width: 80%;
+}
+
+.search__icon {
+  width: 20px;
+  padding: 6px;
+}
+
+.close__button {
+  border: none;
+  outline-width: 0;
+  background-color: transparent;
+}
+
+.close__icon {
+  width: 12px;
+  margin-right: 8px;
+}
+
+.search__results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  margin-left: 25px;
+}
+
 .search {
   display: flex;
   align-items: center;
@@ -15,7 +44,8 @@
   width: 50%;
 }
 
-.search input {
+.search input,
+.search__results input {
   border: none;
   outline-width: 0;
 }

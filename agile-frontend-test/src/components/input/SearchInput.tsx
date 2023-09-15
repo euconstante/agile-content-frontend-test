@@ -1,6 +1,7 @@
 // src/components/SearchInput.tsx
 import React, { useState } from 'react';
 import SearchIcon from '../../assets/images/magnifying-glass.png';
+import CloseIcon from '../../assets/images/close.png';
 import { useLocation } from 'react-router-dom';
 import './SearchInput.css';
 
@@ -24,17 +25,17 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
     <div
       className={
         location.pathname.includes('results')
-          ? 'seach__header'
+          ? 'search__header'
           : 'search__container'
       }
     >
       <div
         className={
-          location.pathname.includes('results') ? 'seach__results' : 'search'
+          location.pathname.includes('results') ? 'search__results' : 'search'
         }
       >
         <span>
-          <img src={SearchIcon} alt="Search Icon" />
+          <img className="search__icon" src={SearchIcon} alt="Search Icon" />
         </span>
         <input
           type="text"
@@ -45,6 +46,11 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
             setIsDisabled(false);
           }}
         />
+        {location.pathname.includes('results') && (
+          <button className="close__button">
+            <img className="close__icon" src={CloseIcon} alt="Close Icon" />
+          </button>
+        )}
       </div>
       {!location.pathname.includes('results') && (
         <button
