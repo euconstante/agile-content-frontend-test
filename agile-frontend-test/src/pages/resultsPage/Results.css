@@ -1,0 +1,11 @@
+.results {
+  display: flex;
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+}
+.loading__one {
+  background-color: #e5e5e5;
+  width: 10%;
+}

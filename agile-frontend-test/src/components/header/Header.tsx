@@ -1,28 +1,57 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSearch } from '../../context/SearchContext';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearch, useResults } from '../../context/SearchContext';
 import './Header.css';
 import MenuDots from '../../assets/images/dots-menu.png';
 import ProfileAvatar from '../../assets/images/pexels-stephan-seeber-1261728.jpg';
 import SearchInput from '../input/SearchInput';
 import GoogleImg from '../../assets/images/Google.png';
+import { FechData } from '../../services';
+
+const batchSize = 100;
 
 function Header() {
   const location = useLocation();
-  const { searchTerm } = useSearch();
+  const navigate = useNavigate();
+  const { searchTerm, setSearchTerm } = useSearch();
   const currentPath = location.pathname;
-  console.log({ searchTerm });
+  const { results, updateResults } = useResults();
+  const [error, setError] = useState<string | null>(null); // State to track errors
+
+  const handleSearch = async (newSearchTerm: string) => {
+    setError(null); // Clear any previous errors
+
+    // Check if we have results in cache
+    if (results.length === 0) {
+      try {
+        const initialData = await FechData(batchSize);
+        updateResults(initialData);
+      } catch (error) {
+        setError('Error fetching data. Please try again.'); // Set an error message on fetch failure
+        return;
+      }
+    }
+
+    // Update search term state
+    setSearchTerm(newSearchTerm);
+  };
+
   return (
     <header className="header">
       {currentPath.startsWith('/results') && (
         <div className="header__left">
-          <img className="header__img" src={GoogleImg} alt="Google logo" />
+          <a href="/">
+            <img className="header__img" src={GoogleImg} alt="Google logo" />
+          </a>
           <SearchInput
             placeholder="Search for animals..."
             searchValue={searchTerm}
-            onSearch={() => console.log('handleSearch')}
+            onSearch={handleSearch}
             onClear={() => {
-              // Implement your clear function here
+              setSearchTerm('');
+              updateResults([]);
+              setError(null); // Clear errors when clearing the input
+              navigate('/results', { state: { results: [] } });
             }}
             isResultsPage={currentPath.startsWith('/results')}
           />
@@ -35,6 +64,8 @@ function Header() {
           </p>
         </div>
       )}
+      {error && <p className="error-message">{error}</p>}{' '}
+      {/* Display error message */}
       <div className="header__right">
         <button className="chrome-header__menu">
           <img src={MenuDots} alt="Menu" />
