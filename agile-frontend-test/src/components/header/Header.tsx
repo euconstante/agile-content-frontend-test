@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSearch } from '../../context/SearchContext'; // Import useSearch from context
 import './Header.css';
 import MenuDots from '../../assets/images/dots-menu.png';
 import ProfileAvatar from '../../assets/images/pexels-stephan-seeber-1261728.jpg';
@@ -8,18 +9,23 @@ import GoogleImg from '../../assets/images/Google.png';
 
 function Header() {
   const location = useLocation();
+  const { searchTerm } = useSearch(); // Access the search term from context
   const currentPath = location.pathname;
   console.log(currentPath);
 
   return (
     <header className="header">
-      {currentPath.startsWith('/results') ? (
+      {currentPath.startsWith('/results') || searchTerm ? ( // Check if there's a search term in context
         <div className="header__left">
           <img className="header__img" src={GoogleImg} alt="Google logo" />
           <SearchInput
-            placeholder={''}
+            placeholder="Search for animals..."
             onSearch={() => console.log('changed')}
-            isDisabled={false}
+            searchValue={''}
+            onClear={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+            isResultsPage={false}
           />
         </div>
       ) : (
