@@ -1,28 +1,26 @@
 // src/components/SearchInput.tsx
 import React from 'react';
+import { useSearch } from '../../context/SearchContext';
+import { useResults } from '../../context/SearchContext';
 import SearchIcon from '../../assets/images/magnifying-glass.png';
 import CloseIcon from '../../assets/images/close.png';
-import './SearchInput.css';
-import { useSearch } from '../../context/SearchContext'; // Import the SearchContext
-import { useResults } from '../../context/SearchContext';
 
+import './SearchInput.css';
 interface SearchInputProps {
   placeholder: string;
   onSearch: (searchTerm: string) => void;
   onClear?: () => void;
   isResultsPage: boolean;
-  searchValue?: string; // Make searchValue an optional prop
+  searchValue?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({
-  placeholder,
-  isResultsPage,
-  onSearch,
-}: SearchInputProps) => {
-  const { searchTerm, setSearchTerm } = useSearch(); // Access searchTerm from context
+const SearchInput: React.FC<SearchInputProps> = (props) => {
+  const { onSearch, isResultsPage } = props;
+  const { searchTerm, setSearchTerm } = useSearch();
   const { updateResults } = useResults();
+
   const handleSearch = () => {
-    onSearch(searchTerm);
+    onSearch?.(searchTerm);
   };
 
   const handleClear = () => {
@@ -33,21 +31,20 @@ const SearchInput: React.FC<SearchInputProps> = ({
   return (
     <div className={isResultsPage ? 'search__header' : 'search__container'}>
       <div className={isResultsPage ? 'search__results' : 'search'}>
-        {isResultsPage && (
+        {isResultsPage ? (
           <button onClick={handleSearch}>
             <img className="search__icon" src={SearchIcon} alt="Search Icon" />
           </button>
-        )}
-        {!isResultsPage && (
+        ) : (
           <span>
             <img className="search__icon" src={SearchIcon} alt="Search Icon" />
           </span>
         )}
         <input
           type="text"
-          placeholder={placeholder}
+          placeholder={props.placeholder}
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm in context
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         {isResultsPage && (
           <button className="close__button" onClick={handleClear}>

@@ -1,3 +1,4 @@
+import { Loader } from '../../components';
 import React, { useState, useEffect } from 'react';
 import { useSearch, useResults } from '../../context/SearchContext';
 import './Results.css';
@@ -28,7 +29,7 @@ const ResultsPage: React.FC = () => {
     // Simulate loading delay using setTimeout
     setTimeout(() => {
       setLoading(false); // Set loading to false after a delay
-    }, 1000); // Change the delay time as needed
+    }, 3000); // Change the delay time as needed
   }, []);
 
   const handleItemClick = (item: AnimalData) => {
@@ -54,7 +55,7 @@ const ResultsPage: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : !searchTerm ? (
         <p>
           Try looking for:{' '}
@@ -65,6 +66,7 @@ const ResultsPage: React.FC = () => {
         </p>
       ) : filteredResults.length > 0 ? (
         <div className="results">
+          <Loader />
           <ul>
             {filteredResults.map((item: AnimalData) => (
               <li key={item.id} onClick={() => handleItemClick(item)}>
