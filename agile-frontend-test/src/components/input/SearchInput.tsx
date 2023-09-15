@@ -3,17 +3,31 @@ import React from 'react';
 import SearchIcon from '../../assets/images/magnifying-glass.png';
 import CloseIcon from '../../assets/images/close.png';
 import './SearchInput.css';
+import { useSearch } from '../../context/SearchContext'; // Import the SearchContext
 
 interface SearchInputProps {
   placeholder: string;
-  searchValue: string;
   onSearch: (searchTerm: string) => void;
   onClear: () => void;
   isResultsPage: boolean;
+  searchValue?: string; // Make searchValue an optional prop
 }
 
-const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
-  const { placeholder, searchValue, onSearch, onClear, isResultsPage } = props;
+const SearchInput: React.FC<SearchInputProps> = ({
+  placeholder,
+  isResultsPage,
+  onSearch,
+}: SearchInputProps) => {
+  const { searchTerm, setSearchTerm } = useSearch(); // Access searchTerm from context
+
+  const handleSearch = () => {
+    onSearch(searchTerm);
+  };
+
+  const handleClear = () => {
+    // Clear the search term
+    setSearchTerm('');
+  };
 
   return (
     <div className={isResultsPage ? 'search__header' : 'search__container'}>
@@ -24,11 +38,11 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
         <input
           type="text"
           placeholder={placeholder}
-          value={searchValue}
-          onChange={(e) => onSearch(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm in context
         />
         {isResultsPage && (
-          <button className="close__button" onClick={onClear}>
+          <button className="close__button" onClick={handleClear}>
             <img className="close__icon" src={CloseIcon} alt="Close Icon" />
           </button>
         )}
@@ -36,8 +50,8 @@ const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
       {!isResultsPage && (
         <button
           className="search__button"
-          onClick={() => onSearch}
-          disabled={!searchValue}
+          onClick={handleSearch}
+          disabled={!searchTerm}
         >
           Buscar
         </button>
