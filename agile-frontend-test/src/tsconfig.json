@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "target": "es6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "types": ["react", "react-dom"],
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable", "DOM", "ESNext"],
     "jsx": "react",
@@ -32,6 +33,7 @@
     "src/**/*.tsx",
     "src/**/*.ts",
     "src/components",
+    "setupTests.ts",
     "src/custom.d.ts"
   ],
   "exclude": ["node_modules"]
