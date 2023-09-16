@@ -7,6 +7,7 @@ const Loader = ({ numBars = 30 }) => {
     const randomWidth = `${Math.random() * 70 + 10}%`; // Random width between 10% and 80%
     return (
       <div
+        data-testid="loader"
         key={index}
         className="loading-bar"
         style={{ width: randomWidth }}

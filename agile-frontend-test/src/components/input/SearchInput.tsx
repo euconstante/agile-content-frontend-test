@@ -47,7 +47,11 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {isResultsPage && (
-          <button className="close__button" onClick={handleClear}>
+          <button
+            className="close__button"
+            onClick={handleClear}
+            data-testid="clear-button-results"
+          >
             <img className="close__icon" src={CloseIcon} alt="Close Icon" />
           </button>
         )}
@@ -57,6 +61,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
           className="search__button"
           onClick={handleSearch}
           disabled={!searchTerm}
+          data-testid="search-button-results"
         >
           Buscar
         </button>

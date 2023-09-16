@@ -9,7 +9,7 @@ import { useResults } from '../../context/SearchContext'; // Import the context 
 const batchSize = 100;
 
 const HomePage: React.FC = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const { results, updateResults } = useResults(); // Use the context hooks
 
@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
       const initialData = await FechData(batchSize);
       updateResults(initialData); // Use updateResults to set results in context
     }
-    setSearchValue(searchTerm);
+    setSearchTerm(searchTerm);
     // Filter the results based on the search term
     const filteredData = results.filter(
       (item) => item.type.toLowerCase() === searchTerm.toLowerCase()
@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
         <img className="home__image" src={GoogleImg} alt="Google name logo" />
         <SearchInput
           placeholder="Buscar"
-          searchValue={searchValue} // Pass the searchValue as needed
+          searchValue={searchTerm} // Pass the searchValue as needed
           onSearch={handleSearch}
           isResultsPage={false}
         />
