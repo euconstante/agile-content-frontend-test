@@ -3,7 +3,7 @@
     "allowJs": true,
     "target": "es6",
     "module": "CommonJS",
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "react-router-dom", "jest", "node"],
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable", "DOM", "ESNext"],
     "jsx": "react",
     "strict": true,
