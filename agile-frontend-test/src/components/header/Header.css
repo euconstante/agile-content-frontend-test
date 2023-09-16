@@ -41,3 +41,18 @@
 .header__img {
   width: 6.5rem;
 }
+/* mobile */
+@media (max-width: 580px) {
+  .header__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .header__img {
+    margin-left: 2rem;
+  }
+  .header__right {
+    display: none;
+  }
+}

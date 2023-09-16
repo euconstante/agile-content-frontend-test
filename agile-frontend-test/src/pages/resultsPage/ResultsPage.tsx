@@ -17,12 +17,17 @@ const ResultsPage: React.FC = () => {
   const { results } = useResults();
   const [selectedItem, setSelectedItem] = useState<AnimalData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isCardOpen, setIsCardOpen] = useState(false);
 
   const filteredResults = searchTerm
     ? results.filter(
         (item) => item.type.toLowerCase() === searchTerm.toLowerCase()
       )
     : results;
+
+  const closeCard = () => {
+    setIsCardOpen(false);
+  };
 
   useEffect(() => {
     // Simulate loading delay using setTimeout
@@ -33,19 +38,25 @@ const ResultsPage: React.FC = () => {
 
   const handleItemClick = (item: AnimalData) => {
     setSelectedItem(item);
+    setIsCardOpen(true);
   };
 
   const renderImage = () => {
     if (selectedItem) {
       return (
-        <div className="results__card--mobile">
-          <CardDetail
-            image={selectedItem.image}
-            url={selectedItem.url}
-            title={selectedItem.title}
-            description={selectedItem.description}
-          />
-        </div>
+        <>
+          {isCardOpen && (
+            <div className="results__card--mobile">
+              <CardDetail
+                image={selectedItem.image}
+                url={selectedItem.url}
+                title={selectedItem.title}
+                description={selectedItem.description}
+                onClose={closeCard}
+              />
+            </div>
+          )}
+        </>
       );
     }
     return null;
