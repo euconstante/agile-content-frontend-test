@@ -16,12 +16,10 @@ function Header() {
   const { searchTerm, setSearchTerm } = useSearch();
   const currentPath = location.pathname;
   const { results, updateResults } = useResults();
-  const [error, setError] = useState<string | null>(null); // State to track errors
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = async (newSearchTerm: string) => {
-    setError(null); // Clear any previous errors
-
-    // Check if we have results in cache
+    setError(null);
     if (results.length === 0) {
       try {
         const initialData = await FechData(batchSize);
@@ -31,8 +29,6 @@ function Header() {
         return;
       }
     }
-
-    // Update search term state
     setSearchTerm(newSearchTerm);
   };
 
@@ -50,7 +46,7 @@ function Header() {
             onClear={() => {
               setSearchTerm('');
               updateResults([]);
-              setError(null); // Clear errors when clearing the input
+              setError(null);
               navigate('/results', { state: { results: [] } });
             }}
             isResultsPage={currentPath.startsWith('/results')}
@@ -65,12 +61,10 @@ function Header() {
         </div>
       )}
       {error && <p className="error-message">{error}</p>}{' '}
-      {/* Display error message */}
       <div className="header__right">
         <button className="chrome-header__menu">
           <img src={MenuDots} alt="Menu" />
         </button>
-
         <div className="chrome-header__profile">
           <img
             src={ProfileAvatar}

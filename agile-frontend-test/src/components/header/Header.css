@@ -11,8 +11,11 @@
 .header__left {
   display: flex;
   align-items: center;
+  width: 50%;
 }
-
+.header__left a {
+  width: 30%;
+}
 .header__right {
   display: flex;
   gap: 10px;
@@ -36,6 +39,5 @@
   height: 24px;
 }
 .header__img {
-  width: 10%;
+  width: 6.5rem;
 }
-/* Add more styles as needed */

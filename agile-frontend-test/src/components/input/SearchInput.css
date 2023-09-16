@@ -6,7 +6,7 @@
 }
 
 .search__header {
-  width: 5rem;
+  width: 100%;
 }
 
 .search__results {
@@ -47,6 +47,12 @@
   border: none;
   border-radius: 0.125rem;
   font-size: 1rem;
+}
+
+.search__results-button {
+  outline: none;
+  background-color: transparent;
+  border: none;
 }
 /* icons */
 .search__icon {

@@ -32,7 +32,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
     <div className={isResultsPage ? 'search__header' : 'search__container'}>
       <div className={isResultsPage ? 'search__results' : 'search'}>
         {isResultsPage ? (
-          <button onClick={handleSearch}>
+          <button className="search__results-button" onClick={handleSearch}>
             <img className="search__icon" src={SearchIcon} alt="Search Icon" />
           </button>
         ) : (
