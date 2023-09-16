@@ -1,62 +1,62 @@
 // src/components/SearchInput.tsx
-import React, { useState } from 'react';
+import React from 'react';
+import { useSearch } from '../../context/SearchContext';
+import { useResults } from '../../context/SearchContext';
 import SearchIcon from '../../assets/images/magnifying-glass.png';
 import CloseIcon from '../../assets/images/close.png';
-import { useLocation } from 'react-router-dom';
-import './SearchInput.css';
 
+import './SearchInput.css';
 interface SearchInputProps {
   placeholder: string;
   onSearch: (searchTerm: string) => void;
-  isDisabled: boolean;
+  onClear?: () => void;
+  isResultsPage: boolean;
+  searchValue?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = (props: SearchInputProps) => {
-  const { placeholder, onSearch } = props;
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [isDisabled, setIsDisabled] = useState(true);
-  const location = useLocation();
+const SearchInput: React.FC<SearchInputProps> = (props) => {
+  const { onSearch, isResultsPage } = props;
+  const { searchTerm, setSearchTerm } = useSearch();
+  const { updateResults } = useResults();
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    onSearch?.(searchTerm);
+  };
+
+  const handleClear = () => {
+    setSearchTerm('');
+    updateResults([]);
   };
 
   return (
-    <div
-      className={
-        location.pathname.includes('results')
-          ? 'search__header'
-          : 'search__container'
-      }
-    >
-      <div
-        className={
-          location.pathname.includes('results') ? 'search__results' : 'search'
-        }
-      >
-        <span>
-          <img className="search__icon" src={SearchIcon} alt="Search Icon" />
-        </span>
+    <div className={isResultsPage ? 'search__header' : 'search__container'}>
+      <div className={isResultsPage ? 'search__results' : 'search'}>
+        {isResultsPage ? (
+          <button className="search__results-button" onClick={handleSearch}>
+            <img className="search__icon" src={SearchIcon} alt="Search Icon" />
+          </button>
+        ) : (
+          <span>
+            <img className="search__icon" src={SearchIcon} alt="Search Icon" />
+          </span>
+        )}
         <input
           type="text"
-          placeholder={placeholder}
+          placeholder={props.placeholder}
           value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setIsDisabled(false);
-          }}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {location.pathname.includes('results') && (
-          <button className="close__button">
+        {isResultsPage && (
+          <button className="close__button" onClick={handleClear}>
             <img className="close__icon" src={CloseIcon} alt="Close Icon" />
           </button>
         )}
       </div>
-      {!location.pathname.includes('results') && (
+      {!isResultsPage && (
         <button
           className="search__button"
           onClick={handleSearch}
-          disabled={isDisabled}
+          disabled={!searchTerm}
         >
           Buscar
         </button>

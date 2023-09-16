@@ -11,8 +11,11 @@
 .header__left {
   display: flex;
   align-items: center;
+  width: 50%;
 }
-
+.header__left a {
+  width: 30%;
+}
 .header__right {
   display: flex;
   gap: 10px;
@@ -36,6 +39,20 @@
   height: 24px;
 }
 .header__img {
-  width: 10%;
+  width: 6.5rem;
 }
-/* Add more styles as needed */
+/* mobile */
+@media (max-width: 580px) {
+  .header__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .header__img {
+    margin-left: 2rem;
+  }
+  .header__right {
+    display: none;
+  }
+}

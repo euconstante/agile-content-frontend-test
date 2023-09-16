@@ -1,39 +1,70 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearch, useResults } from '../../context/SearchContext';
 import './Header.css';
 import MenuDots from '../../assets/images/dots-menu.png';
 import ProfileAvatar from '../../assets/images/pexels-stephan-seeber-1261728.jpg';
-import { SearchInput } from '../input';
+import SearchInput from '../input/SearchInput';
 import GoogleImg from '../../assets/images/Google.png';
+import { FechData } from '../../services';
+
+const batchSize = 100;
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { searchTerm, setSearchTerm } = useSearch();
   const currentPath = location.pathname;
-  console.log(currentPath);
+  const { results, updateResults } = useResults();
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSearch = async (newSearchTerm: string) => {
+    setError(null);
+    if (results.length === 0) {
+      try {
+        const initialData = await FechData(batchSize);
+        updateResults(initialData);
+      } catch (error) {
+        setError('Error fetching data. Please try again.'); // Set an error message on fetch failure
+        return;
+      }
+    }
+    setSearchTerm(newSearchTerm);
+  };
 
   return (
     <header className="header">
-      {currentPath.startsWith('/results') ? (
+      {currentPath.startsWith('/results') && (
         <div className="header__left">
-          <img className="header__img" src={GoogleImg} alt="Google logo" />
+          <a href="/">
+            <img className="header__img" src={GoogleImg} alt="Google logo" />
+          </a>
           <SearchInput
-            placeholder={''}
-            onSearch={() => console.log('changed')}
-            isDisabled={false}
+            placeholder="Search for animals..."
+            searchValue={searchTerm}
+            onSearch={handleSearch}
+            onClear={() => {
+              setSearchTerm('');
+              updateResults([]);
+              setError(null);
+              navigate('/results', { state: { results: [] } });
+            }}
+            isResultsPage={currentPath.startsWith('/results')}
           />
         </div>
-      ) : (
+      )}
+      {!currentPath.startsWith('/results') && (
         <div className="header__left">
           <p>
             <strong>Agile Content </strong>Frontend test
           </p>
         </div>
       )}
+      {error && <p className="error-message">{error}</p>}{' '}
       <div className="header__right">
         <button className="chrome-header__menu">
           <img src={MenuDots} alt="Menu" />
         </button>
-
         <div className="chrome-header__profile">
           <img
             src={ProfileAvatar}
