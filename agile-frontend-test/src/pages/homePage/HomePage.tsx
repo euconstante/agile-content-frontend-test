@@ -3,26 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import GoogleImg from '../../assets/images/Google.png';
 import './HomePage.css';
 import { FechData } from '../../services';
-import SearchInput from '../../components/input/SearchInput'; // Import the new SearchInput component
-import { useResults } from '../../context/SearchContext'; // Import the context hooks
+import SearchInput from '../../components/input/SearchInput'; //
+import { useResults } from '../../context/SearchContext';
 
 const batchSize = 100;
 
 const HomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const { results, updateResults } = useResults(); // Use the context hooks
+  const { results, updateResults } = useResults();
 
   const handleSearch = async (searchTerm: string) => {
-    // Check if we have results in cache
     if (results.length === 0) {
       const initialData = await FechData(batchSize);
-      updateResults(initialData); // Use updateResults to set results in context
+      updateResults(initialData);
     }
     setSearchTerm(searchTerm);
-    // Filter the results based on the search term
+
     const filteredData = results.filter(
-      (item) => item.type.toLowerCase() === searchTerm.toLowerCase()
+      (item) =>
+        item.type.toLowerCase() === searchTerm.toLowerCase() ||
+        item.title.toLowerCase()
     );
     navigate('/results', { state: { results: filteredData } });
   };
@@ -33,7 +34,7 @@ const HomePage: React.FC = () => {
         <img className="home__image" src={GoogleImg} alt="Google name logo" />
         <SearchInput
           placeholder="Buscar"
-          searchValue={searchTerm} // Pass the searchValue as needed
+          searchValue={searchTerm}
           onSearch={handleSearch}
           isResultsPage={false}
         />

@@ -11,6 +11,10 @@ jest.mock('../../context/SearchContext', () => ({
     searchTerm: '',
     setSearchTerm: jest.fn(),
   }),
+  useError: () => ({
+    error: false,
+    setError: jest.fn(),
+  }),
 }));
 
 jest.mock('react-router-dom', () => ({

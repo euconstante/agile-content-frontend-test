@@ -1,6 +1,6 @@
 // src/components/SearchInput.tsx
 import React from 'react';
-import { useSearch } from '../../context/SearchContext';
+import { useError, useSearch } from '../../context/SearchContext';
 import { useResults } from '../../context/SearchContext';
 import SearchIcon from '../../assets/images/magnifying-glass.png';
 import CloseIcon from '../../assets/images/close.png';
@@ -17,15 +17,20 @@ interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = (props) => {
   const { onSearch, isResultsPage } = props;
   const { searchTerm, setSearchTerm } = useSearch();
-  const { updateResults } = useResults();
+  const { results, updateResults } = useResults();
+  const { setError } = useError();
 
   const handleSearch = () => {
     onSearch?.(searchTerm);
+    if (results.length === 0) {
+      setError(true);
+    }
   };
 
   const handleClear = () => {
     setSearchTerm('');
     updateResults([]);
+    setError(false);
   };
 
   return (
@@ -61,7 +66,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
           className="search__button"
           onClick={handleSearch}
           disabled={!searchTerm}
-          data-testid="search-button-results"
+          data-testid="search-button"
         >
           Buscar
         </button>
