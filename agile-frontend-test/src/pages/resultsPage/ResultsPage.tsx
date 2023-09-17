@@ -21,9 +21,11 @@ const ResultsPage: React.FC = () => {
 
   const filteredResults = searchTerm
     ? results.filter(
-        (item) => item.type.toLowerCase() === searchTerm.toLowerCase()
+        (item) =>
+          item.type.toLowerCase() === searchTerm.toLowerCase() ||
+          item.title.toLowerCase() === searchTerm.toLowerCase()
       )
-    : results;
+    : [];
 
   const closeCard = () => {
     setIsCardOpen(false);
@@ -39,6 +41,32 @@ const ResultsPage: React.FC = () => {
   const handleItemClick = (item: AnimalData) => {
     setSelectedItem(item);
     setIsCardOpen(true);
+  };
+
+  const renderResults = () => {
+    if (filteredResults.length > 0) {
+      return (
+        <div className="results">
+          <ul>
+            {filteredResults.map((item: AnimalData) => (
+              <li key={item.id} onClick={() => handleItemClick(item)}>
+                <div className="results__container">
+                  <a href={item.url} target="_blank" rel="noreferrer">
+                    {item.url}
+                  </a>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {renderImage()}
+        </div>
+      );
+    } else {
+      // Check if a search term is present to decide whether to show NotFound with or without the search term
+      return <NotFound searchTerm={searchTerm} />;
+    }
   };
 
   const renderImage = () => {
@@ -62,32 +90,7 @@ const ResultsPage: React.FC = () => {
     return null;
   };
 
-  return (
-    <div>
-      {loading ? (
-        <Loader />
-      ) : filteredResults.length > 0 ? (
-        <div className="results">
-          <ul>
-            {filteredResults.map((item: AnimalData) => (
-              <li key={item.id} onClick={() => handleItemClick(item)}>
-                <div className="results__container">
-                  <a href={item.url} target="_blank" rel="noreferrer">
-                    {item.url}
-                  </a>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {renderImage()}
-        </div>
-      ) : (
-        <NotFound searchTerm={searchTerm} />
-      )}
-    </div>
-  );
+  return <div>{loading ? <Loader /> : renderResults()}</div>;
 };
 
 export default ResultsPage;
