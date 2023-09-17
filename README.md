@@ -8,6 +8,7 @@
 - [Getting Started](#getting-started)
 - [Technologies Used](#technologies-used)
 - [Videos](#videos)
+- [Future Improvements - Challenge Answers](#future-improvements)
 
 
 ## Description
@@ -81,5 +82,7 @@ To get started with the Animal Search App, follow these steps:
 
 ![SearchTests](https://github.com/euconstante/agile-content-frontend-test/assets/75229301/f77321df-1d88-4939-9b13-be86d446711d)  ![Mobile](https://github.com/euconstante/agile-content-frontend-test/assets/75229301/7868ef6e-b6a0-4dda-889b-e5553a742fdc)
 
+## Future Improvements - Challenge Answers
 
+https://docs.google.com/document/d/e/2PACX-1vSENguPKy08aWVDSMSO1G7WpcwKgaBqOjycKdNZUJAuUC0_hOtZCr_VjyUCGU0gYinwPf3JvA7aM1I9/pub
 
